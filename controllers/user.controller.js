@@ -1,6 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt"
+import nodemailer from "nodemailer";
 import User from "../models/user.schma.js";
 
 export const creat = async (req, res) => {
@@ -132,9 +133,40 @@ export const delet = async (req,res)=>{
 
 export const getotp = async (req,res)=>{
     var val = Math.floor(1000 + Math.random() * 9000);
+
+    var transporter = nodemailer.createTransport({
+        host :'smtp.gmail.com',
+        port:587,
+        secure:false,
+        requireTLS:true,
+        auth:{
+            user:'haidarali4408@gmail.com',
+            pass:'qqppuqmyyhjzurda'
+        }
+    })
+    
+    var mailOptions = {
+        from:'haidarali4408@gmail.com',
+        to:'haidarali4408@gmail.com',
+        subject:'sending mail ',
+        html:' <p>asdfghjk '+ val + "</p>"
+    }
+    
+    transporter.sendMail(mailOptions,(error,info)=>{
+        if(error){
+            console.log(error)
+    
+        }else{
+            console.log("mail has been sent",info.response);
+        }
+    })
+
+    
     console.log(val);
   req.body.otp = val
+
     const data = await User.findByIdAndUpdate({_id:req.body.id},req.body)
+    data.otp = req.body.otp
     if(data){
         res.send({
             status:true,
