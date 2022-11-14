@@ -179,4 +179,6 @@ export const getotp = async (req,res)=>{
             status:false,
             msg:"something wrong"
         })
-    }}
+    }
+}
+
