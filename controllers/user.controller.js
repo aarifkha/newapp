@@ -15,7 +15,7 @@ export const creat = async (req, res) => {
                 data: {}
             })
         } else {
-            var pass = await bcrypt.hash(req.body.pasword, 11)
+            var pass = await bcrypt.hash(req.body.password, 11)
             req.body.password = pass
             let users = await User.create(req.body)
             users.token = await jwt.sign({ time: Date(), userid: users._id }, "aarif")
