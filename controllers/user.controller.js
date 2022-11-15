@@ -183,3 +183,23 @@ export const getotp = async (req,res)=>{
     }
 }
 
+export const verfyotp = async (req,res)=>{
+    const checkotp = await User.findOne({mobile:req.body.mobile_no})
+    if(checkotp){
+        var datatobeupdate = {}
+        datatobeupdate.number_verfiy  = true
+        await User.findByIdAndUpdate({_id:checkotp._id},datatobeupdate)
+        checkotp.number_verfiy = true
+        res.send({
+            status:true,
+            msg:"otp verfiy sucessfully",
+            data:checkotp
+        })
+     }else{
+        res.send({
+            status:false,
+            msg:"invalid otp or mobile no given",
+            data:{}
+        })
+     }return;
+}
