@@ -6,7 +6,8 @@ import User from "../models/user.schma.js";
 
 export const creat = async (req, res) => {
     try {
-
+        var val = Math.floor(1000 + Math.random() * 9000);
+   req.body.otp=val
 
         const find = await User.findOne({ email: req.body.email })
         if (find) {
@@ -163,7 +164,7 @@ export const getotp = async (req,res)=>{
 
     
     console.log(val);
-  req.body.otp = val
+     req.body.otp = val
 
     const data = await User.findByIdAndUpdate({_id:req.body.id},req.body)
     data.otp = req.body.otp
