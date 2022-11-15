@@ -22,6 +22,7 @@ export const creat = async (req, res) => {
             users.token = await jwt.sign({ time: Date(), userid: users._id }, "aarif")
             if (users) {
                 res.send({
+                    status:true,
                     msg: "sign",
                     data: users
 
@@ -202,4 +203,9 @@ export const verfyotp = async (req,res)=>{
             data:{}
         })
      }return;
+}
+
+
+export const resetpassword = async (req,res)=>{
+    res.send("sdfghjk")
 }
