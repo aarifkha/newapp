@@ -12,6 +12,7 @@ export const creat = async (req, res) => {
         const find = await User.findOne({ email: req.body.email })
         if (find) {
             res.send({
+                status:false,
                 msg: "email already exict",
                 data: {}
             })
@@ -23,7 +24,7 @@ export const creat = async (req, res) => {
             if (users) {
                 res.send({
                     status:true,
-                    msg: "sign",
+                    msg: " signup successfully  ",
                     data: users
 
                 })
