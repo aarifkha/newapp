@@ -9,6 +9,6 @@ connectdb();
 config()
 
 app.use(router)
-app.listen(process.env.PORT || 2021,(req,res)=>{
+app.listen(process.env.PORT || 2000,(req,res)=>{
     console.log("server connection");
 })

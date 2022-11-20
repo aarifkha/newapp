@@ -10,13 +10,22 @@ export const creat = async (req, res) => {
    req.body.otp=val
 
         const find = await User.findOne({ email: req.body.email })
+        const ceckmobille = await User.findOne({mobile:req.body.mobile})
         if (find) {
             res.send({
                 status:false,
                 msg: "email already exict",
                 data: {}
             })
-        } else {
+       
+        }else if (ceckmobille) {
+            res.send({
+               status: false,
+               msg: "Mobile already exist.",
+               data: {}
+            });
+            return;
+         }  else {
             var pass = await bcrypt.hash(req.body.password, 11)
             req.body.password = pass
             let users = await User.create(req.body)
@@ -80,8 +89,8 @@ try {
 
 
 export  const getdata = async (req,res)=>{
-    const find = await User.find()
-    if(find){
+    const find = await User.find({email:req.body.email})
+    if(find.length > 0){
         res.send({
             status:true,
             msg:"data fatch successfully",
@@ -90,7 +99,7 @@ export  const getdata = async (req,res)=>{
     }else{
         res.send({
             status:false,
-            msg:"data not found"
+            msg:"something wrong with search"
         })
     }
 }
@@ -186,7 +195,7 @@ export const getotp = async (req,res)=>{
 }
 
 export const verfyotp = async (req,res)=>{
-    const checkotp = await User.findOne({mobile:req.body.mobile_no})
+    const checkotp = await User.findOne({mobile:req.body.mobile_no , otp:req.body.otp})
     if(checkotp){
         var datatobeupdate = {}
         datatobeupdate.number_verfiy  = true
