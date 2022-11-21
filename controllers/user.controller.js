@@ -217,5 +217,31 @@ export const verfyotp = async (req,res)=>{
 
 
 export const resetpassword = async (req,res)=>{
-    res.send("sdfghjk")
+    const checkuser = await User.findOne({_id:req.body.id})
+    if(checkuser){
+        const compers = await bcrypt.compare(req.body.old_password, checkuser.password)
+        if(compers){
+            var tobeupdate = {}
+            const hsshspassword = await bcrypt.hash(req.body.new_password,11)
+            tobeupdate.password = hsshspassword
+            await User.findByIdAndUpdate({_id:req.body.id},tobeupdate)
+            res.send({
+                status:true,
+                msg:"successfully passsword change/reset",
+                data:checkuser
+            })
+        }else{
+            res.send({
+                status:false,
+                msg:"old_password doesn't  match please give right password",
+                data:{}
+            })
+        }
+    }else{
+        res.send({
+            status:false,
+            msg:"user doesn't exict",
+            data:{}
+        })
+    }
 }

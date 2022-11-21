@@ -7,7 +7,7 @@ router.route("/user/get").get(getdata)
 router.route("/user/update").put(update)
 router.route("/user/delet").delete(delet)
 router.route("/user/otp_verfiy").post(verfyotp)
-router.route("/user/reset").post(resetpassword)
+router.route("/user/reset_password").post(resetpassword)
 
 
 
