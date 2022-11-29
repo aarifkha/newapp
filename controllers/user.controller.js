@@ -147,7 +147,7 @@ export const getotp = async (req, res) => {
     //         user: 'haidarali4408@gmail.com',
     //         pass: 'qqppuqmyyhjzurda'
     //     }
-    // })
+    // }) 
 
     // var mailOptions = {
     //     from: 'haidarali4408@gmail.com',
